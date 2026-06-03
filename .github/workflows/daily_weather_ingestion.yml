@@ -20,7 +20,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install -r requirements.txt
+          pip install requests azure-storage-blob python-dotenv
 
       - name: Run ingestion script
         env:
