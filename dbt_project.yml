@@ -1,0 +1,17 @@
+name: 'swedish_weather_pipeline'
+version: '1.0.0'
+config-version: 2
+
+profile: 'default'
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+test-paths: ["tests"]
+macro-paths: ["macros"]
+
+models:
+  swedish_weather_pipeline:
+    staging:
+      +materialized: view
+    marts:
+      +materialized: table
