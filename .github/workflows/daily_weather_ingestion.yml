@@ -2,6 +2,7 @@ name: Daily Weather Ingestion
 
 on:
   schedule:
+    # 02:00 UTC = 04:00 Sweden time during summer
     - cron: "0 2 * * *"
   workflow_dispatch:
 
@@ -12,6 +13,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Log workflow start
+        run: |
+          echo "GitHub ingestion workflow started at: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -29,4 +34,7 @@ jobs:
       - name: Run ingestion script
         env:
           AZURE_STORAGE_CONNECTION_STRING: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
-        run: python ingestion/Weather_api_ingestion.py
+        run: |
+          echo "Starting API fetch + Azure upload at: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+          python ingestion/Weather_api_ingestion.py
+          echo "Finished API fetch + Azure upload at: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
